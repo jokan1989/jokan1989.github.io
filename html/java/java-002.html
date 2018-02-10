@@ -1,0 +1,921 @@
+<html>
+<head>
+<title>Evernote Export</title>
+<basefont face="微软雅黑" size="2" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="exporter-version"
+	content="Evernote Windows/305825 (zh-CN, DDL); Windows/10.0.16299 (Win64);" />
+<style>
+body, td {
+	font-family: 微软雅黑;
+	font-size: 10pt;
+}
+</style>
+</head>
+<body>
+	<a name="368" />
+
+	<div>
+		<span><div>
+				<ul>
+					<li><span style="font-weight: bold; line-height: 1.45;">什么是RPC？</span></li>
+				</ul>
+			</div>
+			<div>RPC（Remote Procedure Call）远程过程调用。见名知意 - 从远程主机调用一个过程/函数。</div>
+			<div>RPC的目标是：使得本程序调用其它远程主机上的函数，好像调用本程序内的函数一样简单，并且屏蔽编程语言的差异性。</div>
+			<div>
+				<span style="line-height: 1.45;">要实现上述目标首先是设计一种通讯协议，称之为：RPC协议（Protocol）</span>
+			</div>
+			<div>RPC协议不是一个具体的协议，而是一个类型名，代表一类协议，这类协议叫做RPC协议；</div>
+			<div>RPC协议在TCP/UDP之上，广义上可以跨越平台、语言进行应用间通讯（说广义是因为可以开发一个协议且不支持跨语言）；</div>
+			<div>
+				<ul>
+					<li><span style="font-weight: bold; line-height: 1.45;">为什么要用RPC？</span></li>
+				</ul>
+			</div>
+			<div>其实这是应用开发到一定的阶段的强烈需求驱动的。</div>
+			<div>如果我们开发简单的单一应用，逻辑简单、用户不多、流量不大，那我们用不着；</div>
+			<div>当我们的系统访问量增大、业务增多时，我们会发现一台单机运行此系统已经无法承受。此时，我们可以将业务拆分成几个互不关联的应用，分别部署在各自机器上，以划清逻辑并减小压力。此时，我们也可以不需要RPC，因为应用之间是互不关联的。</div>
+			<div>当我们的业务越来越多、应用也越来越多时，自然的，我们会发现有些功能已经不能简单划分开来或者划分不出来。此时，可以将公共业务逻辑抽离出来，将之组成独立的服务Service应用
+				。而原有的、新增的应用都可以与那些独立的Service应用
+				交互，以此来完成完整的业务功能。所以此时，我们急需一种高效的应用程序之间的通讯手段来完成这种需求，所以你看，RPC大显身手的时候来了！</div>
+			<div>
+				<ul>
+					<li><span style="font-weight: bold; line-height: 1.45;">有哪些RPC？</span></li>
+				</ul>
+			</div>
+			<div>有很多RPC框架：CORBAR、Thrift、Dubbo等等。基本上他们分为两种类别：</div>
+			<div>一种是跨语言的；</div>
+			<div>一种是同语言的，如果你的分布式应用架构主体都是Java应用，显然我们不应该使用跨语言的RPC来多一层中转浪费效率。</div>
+			<div>就Java来说，我认为其本身API提供的RMI就是一种RPC协议，但是其毕竟太原始，需要自己去添加很多机制才能上生产环境。所以，今天介绍下我最近使用的Dubbo框架。</div>
+			<div>
+				<ul>
+					<li><span style="font-weight: bold;">Dubbo使用实例</span></li>
+				</ul>
+				<div>
+					Dubbo git网址：<a href="https://github.com/alibaba/dubbo">https://github.com/alibaba/dubbo</a>
+				</div>
+			</div>
+			<div>
+				ZooKeeper网址：<a href="http://zookeeper.apache.org/">http://zookeeper.apache.org/</a>
+			</div>
+			<div>环境构建：</div>
+			<div>java 1.8， tomcat8， zookeeper-3.4.9， dubbo-admin-2.5.6</div>
+			<div>工程代码：</div>
+			<div>
+				dubbo-service-api, <span style="line-height: 1.45;">dubbo-service-impl, </span><span
+					style="line-height: 1.45;">dubbo-service-web</span>
+			</div>
+			<div>
+				<span style="font-weight: bold;">dubbo-service-api</span>：所有的接口代码，作为jar包生成。
+			</div>
+			<div>
+				<span style="line-height: 1.45;"><span
+					style="line-height: 1.45; font-weight: bold;">dubbo-service-impl</span>：接口实现工程，作为接口的提供方存在。接口实现有dubbo管理，并有dubbo发布注册。</span>
+			</div>
+			<div>
+				<span style="line-height: 1.45;">dubbo接口注册配置文件</span>
+			</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;?xml
+						version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;beans
+						xmlns=&quot;</span><a
+						href="http://www.springframework.org/schema/beans%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/beans&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    xmlns:xsi=&quot;</span><a
+						href="http://www.w3.org/2001/XMLSchema-instance%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.w3.org/2001/XMLSchema-instance&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;
+						xmlns:jee=&quot;</span><a
+						href="http://www.springframework.org/schema/jee%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/jee&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    xmlns:tx=&quot;</span><a
+						href="http://www.springframework.org/schema/tx%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/tx&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;
+						xmlns:dubbo=&quot;</span><a
+						href="http://code.alibabatech.com/schema/dubbo%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://code.alibabatech.com/schema/dubbo&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    xmlns:context=&quot;</span><a
+						href="http://www.springframework.org/schema/context%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/context&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    xsi:schemaLocation=&quot;</span><a
+						href="http://www.springframework.org/schema/beans"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/beans</a>
+				</div>
+				<div>
+					<a
+						href="http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/beans/spring-beans-3.1.xsd</a>
+				</div>
+				<div>
+					<a href="http://www.springframework.org/schema/tx"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/tx</a>
+				</div>
+				<div>
+					<a
+						href="http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/tx/spring-tx-3.1.xsd</a>
+				</div>
+				<div>
+					<a href="http://www.springframework.org/schema/jee"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/jee</a>
+				</div>
+				<div>
+					<a
+						href="http://www.springframework.org/schema/jee/spring-jee-3.1.xsd"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/jee/spring-jee-3.1.xsd</a>
+				</div>
+				<div>
+					<a href="http://code.alibabatech.com/schema/dubbo"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://code.alibabatech.com/schema/dubbo</a>
+				</div>
+				<div>
+					<a href="http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://code.alibabatech.com/schema/dubbo/dubbo.xsd</a>
+				</div>
+				<div>
+					<a href="http://www.springframework.org/schema/context"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/context</a>
+				</div>
+				<div>
+					<a
+						href="http://www.springframework.org/schema/context/spring-context-3.1.xsd%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/context/spring-context-3.1.xsd&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    default-lazy-init=&quot;false&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;dubbo:application
+						name=&quot;dubbo_provider&quot;&gt;&lt;/dubbo:application&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						使用zookeeper注册中心暴露服务地址 --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;dubbo:registry
+						address=&quot;zookeeper://127.0.0.1:2181&quot;
+						check=&quot;false&quot; subscribe=&quot;false&quot;
+						register=&quot;&quot;&gt;&lt;/dubbo:registry&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						&lt;dubbo:registry address=&quot;redis://127.0.0.1:6379&quot;
+						/&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;dubbo:protocol
+						name=&quot;dubbo&quot; port=&quot;20881&quot; /&gt; --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    </span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						要暴露的服务接口 --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;bean
+						id=&quot;MgService&quot;
+						class=&quot;com.zhaok.dubbo.service.register.impl.MgServiceImpl&quot;/&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						&lt;bean id=&quot;PoiService&quot;
+						class=&quot;com.mg.dubbo.register.service.impl.PoiServiceImpl&quot;/&gt;
+						--&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;dubbo:service
+						interface=&quot;com.zhaok.dubbo.service.register.MgService&quot;
+						ref=&quot;MgService&quot; /&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						&lt;dubbo:service
+						interface=&quot;com.mg.dubbo.register.service.PoiService&quot;
+						ref=&quot;PoiService&quot; /&gt; --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;/beans&gt;</span>
+				</div>
+			</div>
+			<div>dubbo依赖的jar包</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;dependencies&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;com.zhaok.dubbo&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;dubbo-service-api&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        </span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;dubbo&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;2.5.3&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;3.4.6&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;com.github.sgroschupf&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;zkclient&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;0.1&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;4.2.1.RELEASE&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;druid&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;1.0.13&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;junit&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;3.8.1&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;scope&gt;test&lt;/scope&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;mysql&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;5.1.34&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;com.jfinal&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;jfinal&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;2.0&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;org.apache.poi&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;poi-ooxml&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;3.12&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;!--</span>
+					<a href="https://mvnrepository.com/artifact/redis.clients/jedis"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">https://mvnrepository.com/artifact/redis.clients/jedis</a>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">--&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;2.1.0&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;!--</span>
+					<a
+						href="https://mvnrepository.com/artifact/commons-pool/commons-pool"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">https://mvnrepository.com/artifact/commons-pool/commons-pool</a>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">--&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;commons-pool&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;commons-pool&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;1.6&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        </span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;/dependencies&gt;</span>
+				</div>
+			</div>
+			<div>
+				<span style="line-height: 1.45;"><span
+					style="line-height: 1.45; font-weight: bold;">dubbo-service-web</span>：接口调用工程，作为接口的消费方存在。</span>
+			</div>
+			<div>dubbo调用配置</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;?xml
+						version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;beans
+						xmlns=&quot;</span><a
+						href="http://www.springframework.org/schema/beans%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/beans&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    xmlns:xsi=&quot;</span><a
+						href="http://www.w3.org/2001/XMLSchema-instance%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.w3.org/2001/XMLSchema-instance&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;
+						xmlns:jee=&quot;</span><a
+						href="http://www.springframework.org/schema/jee%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/jee&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    xmlns:tx=&quot;</span><a
+						href="http://www.springframework.org/schema/tx%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/tx&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;
+						xmlns:dubbo=&quot;</span><a
+						href="http://code.alibabatech.com/schema/dubbo%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://code.alibabatech.com/schema/dubbo&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    xmlns:context=&quot;</span><a
+						href="http://www.springframework.org/schema/context%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/context&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    xsi:schemaLocation=&quot;</span><a
+						href="http://www.springframework.org/schema/beans"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/beans</a>
+				</div>
+				<div>
+					<a
+						href="http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/beans/spring-beans-3.1.xsd</a>
+				</div>
+				<div>
+					<a href="http://www.springframework.org/schema/tx"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/tx</a>
+				</div>
+				<div>
+					<a
+						href="http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/tx/spring-tx-3.1.xsd</a>
+				</div>
+				<div>
+					<a href="http://www.springframework.org/schema/jee"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/jee</a>
+				</div>
+				<div>
+					<a
+						href="http://www.springframework.org/schema/jee/spring-jee-3.1.xsd"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/jee/spring-jee-3.1.xsd</a>
+				</div>
+				<div>
+					<a href="http://code.alibabatech.com/schema/dubbo"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://code.alibabatech.com/schema/dubbo</a>
+				</div>
+				<div>
+					<a href="http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://code.alibabatech.com/schema/dubbo/dubbo.xsd</a>
+				</div>
+				<div>
+					<a href="http://www.springframework.org/schema/context"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/context</a>
+				</div>
+				<div>
+					<a
+						href="http://www.springframework.org/schema/context/spring-context-3.1.xsd%22"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">http://www.springframework.org/schema/context/spring-context-3.1.xsd&quot;</a><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    default-lazy-init=&quot;false&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;dubbo:application
+						name=&quot;dubbo_consumer&quot;&gt;&lt;/dubbo:application&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						使用zookeeper注册中心暴露服务地址 --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;dubbo:registry
+						address=&quot;zookeeper://127.0.0.1:2181&quot;
+						check=&quot;false&quot;&gt;&lt;/dubbo:registry&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						&lt;dubbo:registry address=&quot;redis://127.0.0.1:6379&quot;
+						/&gt; --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						要引用的服务 --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;dubbo:reference
+						interface=&quot;com.zhaok.dubbo.service.register.MgService&quot;
+						id=&quot;MgService&quot;&gt;&lt;/dubbo:reference&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;!--
+						&lt;dubbo:reference
+						interface=&quot;com.mg.dubbo.register.service.PoiService&quot;
+						id=&quot;PoiService&quot;
+						timeout=&quot;200000&quot;&gt;&lt;/dubbo:reference&gt; --&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;/beans&gt;</span>
+				</div>
+			</div>
+			<div>调用依赖jar包</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;dependencies&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;com.zhaok.dubbo&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;dubbo-service-api&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        </span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;dubbo&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;2.5.3&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;exclusions&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">                &lt;exclusion&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">                    &lt;artifactId&gt;spring&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">                    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">                &lt;/exclusion&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;/exclusions&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;3.4.6&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        </span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;com.github.sgroschupf&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;zkclient&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;0.1&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;4.2.1.RELEASE&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        </span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;junit&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;3.8.1&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;scope&gt;test&lt;/scope&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;!--</span>
+					<a href="https://mvnrepository.com/artifact/redis.clients/jedis"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">https://mvnrepository.com/artifact/redis.clients/jedis</a>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">--&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;2.1.0&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;!--</span>
+					<a
+						href="https://mvnrepository.com/artifact/commons-pool/commons-pool"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); font-family: Monaco; color: rgb(51, 51, 51);">https://mvnrepository.com/artifact/commons-pool/commons-pool</a>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">--&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;groupId&gt;commons-pool&lt;/groupId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;artifactId&gt;commons-pool&lt;/artifactId&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            &lt;version&gt;1.6&lt;/version&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        &lt;/dependency&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;/dependencies&gt;</span>
+				</div>
+			</div>
+			<div>
+				<ul>
+					<li><span style="font-weight: bold;">环境测试</span></li>
+				</ul>
+				<div>1.启动zookeeper，默认端口2181。</div>
+			</div>
+			<div>2.将dubbo-admin用maven打包，放入tomcat下启动。流量器就可以访问dubbo-admin接口暴露的管理界面了。</div>
+			<div>3.分别启动dubbo-service-impl，dubbo-service-web工程，访问web工程并测试impl接口</div>
+			<div>
+				<br />
+			</div>
+			<div>Dubbo架构设计详解</div>
+			<div>
+				<a href="http://shiyanjun.cn/archives/325.html">http://shiyanjun.cn/archives/325.html</a>
+			</div></span>
+	</div>
+</body>
+</html>
+ 

@@ -1,10 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Acezk Blog</title>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/blog.css" rel="stylesheet">
+
 </head>
 <body>
-111111111111
+	<!-- 头部 start -->
+	<div class="blog-masthead">
+		<div class="container">
+			<nav class="blog-nav">
+				<a class="blog-nav-item active" href="index.html">Home</a>
+				<a class="blog-nav-item" href="javascript:void(0);" onclick="category('java')">Java</a>
+			</nav>
+		</div>
+	</div>
+	<!-- 头部 end -->
+	<div class="container">
+		<div class="row blog-header">
+			<div class="col-sm-8 blog-main">
+				<div id="loading" style="display: none;"><b>正在加载中。。。</b></div>
+				<iframe id="frame_context" name="frame_context" src="index_contex.html" width="100%" height="100px" frameborder="0" scrolling="no" onload="iframeLoad();"></iframe>
+			</div>
+			
+			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+				<div class="sidebar-module sidebar-module-inset">
+					<h4>About</h4>
+					<p>
+						welcome to acezk blog!!
+					</p>
+				</div>
+				<div id="category_content" class="sidebar-module">
+					<!-- <h4>java</h4>
+					<ol class="list-unstyled">
+						<li><a href="html/java/java-003.html" target="frame_context">jxl Excel的使用</a></li>
+					</ol> -->
+				</div>
+			</div>
+		</div>
+	</div><!-- /.container -->
+	
+	<script src="jQuery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+	// 处理ifream加载
+	function iframeLoad() {
+		var iframe = document.getElementById("frame_context");
+		if (iframe.attachEvent){
+		    iframe.attachEvent("onload", function(){  
+		    document.getElementById("loading").style.display="none";  
+		    });   
+		} else {   
+		    iframe.onload = function(){  
+		    document.getElementById("loading").style.display="none";  
+		    };   
+		}
+		
+		try {
+			document.getElementById("frame_context").height=0;
+		    document.getElementById("frame_context").height=document.getElementById("frame_context").contentWindow.document.body.scrollHeight;
+		} catch(ex) {
+			document.getElementById("frame_context").height=900;
+		}
+	}
+	// 分类标题
+	function category(cname) {
+		var html = '';
+		$.getJSON("json/"+cname+".json", function(jsonData) {
+			html += '<h4>'+cname+'</h4>';
+			html += '<ol class="list-unstyled">';
+			$.each(jsonData, function(dataIndex, data) {
+				html += '<li><a href="'+data.url+'" target="frame_context">'+data.name+'</a></li>';
+			})
+			html += '</ol>';
+			$('#category_content').append(html);
+		})
+	}
+	</script>
 </body>
 </html>

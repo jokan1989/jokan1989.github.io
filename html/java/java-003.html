@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Acezk Blog</title>
+
+<link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="../../css/blog.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="blog-post">
+		<h2 class="blog-post-title">jxl Excel的使用</h2>
+		<p class="blog-post-meta">
+			<span>2017/09/08</span> <a href="#">acezk</a>
+		</p>
+		<hr>
+		<h3>Excel 的导入和导出</h3>
+		<p>导入Excel</p>
+		<pre>
+			<code>
+    @Test  
+    public void importExcel() {  
+        Workbook book = null;  
+        try {  
+            book = Workbook.getWorkbook(new File("D:/test/测试.xls"));  
+            // 获得第一个工作表对象  
+            Sheet sheet = book.getSheet(0);  
+            int rows = sheet.getRows();  
+            int columns = sheet.getColumns();
+            // 循环数据  
+            for (int i = 0; i < rows; i++) {  
+                for (int j = 0; j < columns; j++) {  
+                    Cell cell = sheet.getCell(j, i);  
+                    String result = cell.getContents();  
+                    System.out.println(result);  
+                }  
+            }  
+        } catch (Exception e) {  
+  
+        } finally {  
+            if (book != null) {  
+                book.close();  
+            }  
+        }  
+    }  
+  			</code>
+  		</pre>
+  		<p>导出 Excel</p>
+  		<pre>
+  			<code>
+    @Test
+    public void exportExcel() {
+        WritableWorkbook book = null;
+        try {
+            // 打开文件
+            book = Workbook.createWorkbook(new File("D:/test/测试.xls"));
+            // 生成名为"学生"的工作表，参数0表示这是第一页
+            WritableSheet sheet = book.createSheet("学生", 0);
+            // 指定单元格位置是第一列第一行(0, 0)以及单元格内容为张三
+            Label label = new Label(0, 0, "张三");
+            // 将定义好的单元格添加到工作表中
+            sheet.addCell(label);
+            // 保存数字的单元格必须使用Number的完整包路径
+            jxl.write.Number number = new jxl.write.Number(1, 0, 30);
+            sheet.addCell(number);
+            // 写入数据并关闭文件
+            book.write();
+        } catch (Exception e) {
+
+        } finally {
+            if(book!=null){
+                try {
+                    book.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } 
+            }
+        }
+    }
+  			</code>
+  		</pre>
+  		<br >
+  		<h3>Excel 的常用操作</h3>
+  		<h4>字符串格式化</h4>
+  		<p>字符串的格式化涉及到的是字体、粗细、字号等元素，这些功能主要由WritableFont和WritableCellFormat类来负责</p>
+  		<pre>
+  			<code>
+WritableCellFormat format1 = new WritableCellFormat(new WritableFont(WritableFont.ARIAL, 12));
+format1.setBorder(Border.ALL, BorderLineStyle.THIN);
+format1.setAlignment(Alignment.CENTRE);
+format1.setVerticalAlignment(VerticalAlignment.CENTRE);
+format1.setWrap(true);//自动换行
+  			</code>
+  		</pre>
+  		<h4>单元格的操作</h4>
+  		<p>合并单元格 ：WritableSheet.mergeCells(int m, int n, int p, int q); //作用是从(m,n)到(p,q)的单元格全部合并</p>
+  		<pre>
+  			<code>
+WritableSheet sheet=book.createSheet("第一页", 0); 
+//合并第一列第一行到第六列第一行的所有单元格
+//合并既可以是横向的，也可以是纵向的。合并后的单元格不能再次进行合并，否则会触发异常。
+sheet.mergeCells(0, 0, 5, 0);
+  			</code>
+  		</pre>
+  		<p>行高和列宽</p>
+  		<pre>
+  			<code>
+WritableSheet.setRowView(int i, int height);//作用是指定第i+1行的高度
+WritableSheet.setColumnView(int i,int width);//作用是指定第i+1列的宽度
+ws.getSettings().setDefaultColumnWidth(30); //设置单元格默认宽度
+  			</code>
+  		</pre>
+  		<h4>注意事项</h4>
+  		<p>对于导出并下载的excel文件存在乱码问题，可以将编码换成iso-8859-1试试</p>
+  		<pre>
+  			<code>
+response.reset();
+response.setHeader("Content-Disposition", "attachment; filename=" + new String(filename.getBytes("gb2312"), "ISO8859-1") + ".xls");
+response.setContentType("application/vnd.ms-excel; charset=utf-8");
+  			</code>
+  		</pre>
+	</div><!-- /.blog-post -->
+</body>
+</html>
