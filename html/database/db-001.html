@@ -1,0 +1,613 @@
+<html>
+<head>
+<title>Evernote Export</title>
+<basefont face="微软雅黑" size="2" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="exporter-version"
+	content="Evernote Windows/305825 (zh-CN, DDL); Windows/10.0.16299 (Win64);" />
+<style>
+body, td {
+	font-family: 微软雅黑;
+	font-size: 10pt;
+}
+</style>
+</head>
+<body>
+	<a name="388" />
+
+	<div>
+		<span><div>
+				<font style="font-size: 11pt;"><b>关于mybatis 3.0
+						collection用法</b></font>
+			</div>
+			<div>
+				<ul>
+					<li><span style="line-height: 1.45;">用法一：作为主表的子表数据使用</span></li>
+				</ul>
+			</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(199, 221, 12); font-family: Consolas; font-weight: bold;">//主表对象</span>
+				</div>
+				<div>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(141, 203, 226); font-family: Consolas; font-weight: bold;">public</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(141, 203, 226); font-family: Consolas; font-weight: bold;">class</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(68, 68, 5); color: rgb(210, 82, 82); font-family: Consolas; font-weight: bold;">EducationClass</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; font-weight: bold;">{</span>
+				</div>
+				<div>
+					<span
+						style="background-color: rgb(50, 57, 62); font-size: 9pt; min-height: 10pt; color: rgb(216, 216, 216); font-family: Consolas; font-weight: bold;">  
+						 </span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(141, 203, 226); font-family: Consolas; font-weight: bold;">private</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(210, 82, 82); font-family: Consolas; font-weight: bold;">Integer</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; font-weight: bold;">id</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; font-weight: bold;">;</span>
+				</div>
+				<div>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(141, 203, 226); font-family: Consolas; font-weight: bold;">  
+						 private</span> <span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(209, 151, 217); font-family: Consolas; font-weight: bold;">List</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; font-weight: bold;">&lt;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(191, 164, 164); font-family: Consolas; font-weight: bold;">EducationClassManage</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; font-weight: bold;">&gt;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(68, 68, 5); color: rgb(190, 214, 255); font-family: Consolas; font-weight: bold;">classManageList</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; font-weight: bold;">;</span>
+				</div>
+				<div>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; font-weight: bold;">}</span>
+				</div>
+			</div>
+			<div>mybatis mapper.xml配置</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas;">&lt;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(68, 68, 5); color: rgb(190, 214, 255); font-family: Consolas;">resultMap</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas;">id</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas;">&quot;BaseResultMap&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas;">type</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas;">&quot;com.wxadt.wxcep.model.educationClass.EducationClass&quot;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas;">&gt;</span>
+				</div>
+				<div>
+					<span
+						style="background-color: rgb(251, 250, 248); font-size: 9pt; min-height: 10pt; color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">  
+						 </span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">&lt;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">id</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">column</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas; line-height: 1.45;">&quot;id&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">jdbcType</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas; line-height: 1.45;">&quot;INTEGER&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">property</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas; line-height: 1.45;">&quot;id&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">/&gt;</span>
+				</div>
+				<div>
+					<span
+						style="background-color: rgb(251, 250, 248); font-size: 9pt; min-height: 10pt; color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">  
+						 </span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">&lt;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(68, 68, 5); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">collection</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">property</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas; line-height: 1.45;">&quot;classManageList&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">ofType</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas; line-height: 1.45;">&quot;com.wxadt.wxcep.model.educationClass.EducationClassManage&quot;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">&gt;</span>
+				</div>
+				<div>
+					<span
+						style="background-color: rgb(251, 250, 248); font-size: 9pt; color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45; min-height: 10pt; background-position: initial initial; background-repeat: initial initial;">  
+						 </span><span
+						style="background-color: rgb(251, 250, 248); font-size: 9pt; min-height: 10pt; color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">  
+						 </span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">&lt;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">result</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">column</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas; line-height: 1.45;">&quot;classId&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">property</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas; line-height: 1.45;">&quot;classId&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">/&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; min-height: 10pt; background-color: rgb(251, 250, 248); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">  
+						 <span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">&lt;/</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(68, 68, 5); color: rgb(190, 214, 255); font-family: Consolas; line-height: 1.45;">collection</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">&gt;</span>
+					</span>
+				</div>
+				<div>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas;">&lt;/</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas;">resultMap</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas;">&gt;</span>
+				</div>
+				<div>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas;">&lt;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(68, 68, 5); color: rgb(190, 214, 255); font-family: Consolas;">select</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas;">id</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas;">&quot;selectBySelective&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas;">parameterType</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas;">&quot;EducationClassForm&quot;</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(190, 214, 255); font-family: Consolas;">resultMap</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas;">=</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(255, 198, 0); font-family: Consolas;">&quot;BaseResultMap&quot;</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas;">&gt;</span>
+				</div>
+				<div>
+					<span style="font-size: 9pt; min-height: 10pt;"><span
+						style="background-color: rgb(251, 250, 248); font-size: 9pt; color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">  
+							 </span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">select</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62);"><span
+							style="background-color: rgb(50, 57, 62); font-size: 9pt; color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;"> </span></span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45; text-decoration: underline;">oec</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">.*,
+							group_concat(oecm.userName) as classManageNames</span></span>
+				</div>
+				<div>
+					<span
+						style="background-color: rgb(251, 250, 248); font-size: 9pt; min-height: 10pt; color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">  
+						 </span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">from
+						oa_education_class</span> <span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45; text-decoration: underline;">oec</span>
+				</div>
+				<div>
+					<span
+						style="background-color: rgb(251, 250, 248); font-size: 9pt; min-height: 10pt; color: rgb(121, 171, 255); font-family: Consolas; line-height: 1.45;">  
+						 </span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">left
+						join oa_education_class_manage</span> <span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45; text-decoration: underline;">oecm</span>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(216, 216, 216); font-family: Consolas; line-height: 1.45;">on
+						oec.id=oecm.classId</span>
+				</div>
+				<div>
+					<span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas;">&lt;/</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(68, 68, 5); color: rgb(190, 214, 255); font-family: Consolas;">select</span><span
+						style="min-height: 10pt; font-size: 9pt; background-color: rgb(50, 57, 62); color: rgb(121, 171, 255); font-family: Consolas;">&gt;<br />
+					<br /></span>
+				</div>
+			</div>
+			<div>
+				<span style="line-height: 1.45;"><br /></span>
+			</div>
+			<div>
+				<ul>
+					<li><span style="line-height: 1.45;">用法二：作为子节点使用</span><br /></li>
+				</ul>
+			</div>
+			<div>表结构示例：</div>
+			<div>
+				<div>
+					<br />
+				</div>
+				<table style="border-collapse: collapse; min-width: 100%;">
+					<colgroup>
+						<col style="width: 80px;"></col>
+						<col style="width: 73px;"></col>
+						<col style="width: 52px;"></col>
+						<col style="width: 65px;"></col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 80px; padding: 8px;"><div>列名</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 73px; padding: 8px;"><div>数据类型</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 52px; padding: 8px;"><div>长度</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 65px; padding: 8px;"><div>主键</div></td>
+						</tr>
+						<tr>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 80px; padding: 8px;"><div>id</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 73px; padding: 8px;"><div>int</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 52px; padding: 8px;"><div>11</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 65px; padding: 8px;">是</td>
+						</tr>
+						<tr>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 80px; padding: 8px;"><div>level</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 73px; padding: 8px;"><div>int</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 52px; padding: 8px;"><div>1</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 65px; padding: 8px;"><div>否</div></td>
+						</tr>
+						<tr>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 80px; padding: 8px;"><div>name</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 73px; padding: 8px;">varchar</td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 52px; padding: 8px;"><div>50</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 65px; padding: 8px;"><div>否</div></td>
+						</tr>
+						<tr>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 80px; padding: 8px;"><div>parentId</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 73px; padding: 8px;"><div>int</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 52px; padding: 8px;"><div>11</div></td>
+							<td
+								style="border: 1px solid rgb(204, 204, 204); width: 65px; padding: 8px;"><div>否</div></td>
+						</tr>
+					</tbody>
+				</table>
+				<div>
+					<br />
+				</div>
+			</div>
+			<div>Java对象</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">public
+						class AssessmentItemPageModel extends AssessmentItem {</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;"> 
+						  </span><span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco; line-height: 1.45;">private
+						List&lt;AssessmentItemPageModel&gt; nodes;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">}</span>
+				</div>
+			</div>
+			<div>配置用法1：</div>
+			<div>
+				<span
+					style="font-size: 9pt; color: rgb(51, 51, 51); font-family: Monaco;">配置的<span
+					style="font-size: 9pt; color: rgb(51, 51, 51); font-family: Monaco;">column=&quot;id&quot;会将当前记录的id字段传入<span
+						style="font-size: 9pt; color: rgb(51, 51, 51); font-family: Monaco;">select=&quot;selectItemTreeChild&quot;这个查询中，得到的结果集将存入<span
+							style="font-size: 9pt; color: rgb(51, 51, 51); font-family: Monaco;">nodes</span></span></span></span>
+			</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;resultMap
+						type=&quot;AssessmentItemPageModel&quot;
+						id=&quot;TreeResultMap&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;id
+						column=&quot;id&quot; jdbcType=&quot;INTEGER&quot;
+						property=&quot;id&quot; /&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;result
+						column=&quot;context&quot; jdbcType=&quot;VARCHAR&quot;
+						property=&quot;text&quot; /&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;result
+						column=&quot;parentId&quot; jdbcType=&quot;INTEGER&quot;
+						property=&quot;parentId&quot; /&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;result
+						column=&quot;level&quot; jdbcType=&quot;VARCHAR&quot;
+						property=&quot;level&quot; /&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;collection
+						property=&quot;nodes&quot; column=&quot;id&quot;
+						ofType=&quot;AssessmentItemPageModel&quot;
+						select=&quot;selectItemTreeChild&quot;&gt;&lt;/collection&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;/resultMap&gt;</span>
+				</div>
+				<div>
+					<br />
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;select
+						id=&quot;selectItemTree&quot;
+						parameterType=&quot;AssessmentItemForm&quot;
+						resultMap=&quot;TreeResultMap&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    select
+						* from assessment_item</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    where
+						1 = 1</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;if
+						test=&quot;level != null&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        and
+						level = #{level}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;/if&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;if
+						test=&quot;projectId != null&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        and
+						projectId = #{projectId}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;/if&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;if
+						test=&quot;id != null&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        and
+						id = #{id}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;/if&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;/select&gt;</span>
+				</div>
+				<div>
+					<br />
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;select
+						id=&quot;selectItemTreeChild&quot;
+						parameterType=&quot;java.lang.Integer&quot;
+						resultType=&quot;AssessmentItemPageModel&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    select</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    id,
+						context as text, parentId, level</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    from
+						assessment_item where parentId = #{id}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;/select&gt;</span>
+				</div>
+				<div>
+					<br
+						style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);" />
+				</div>
+			</div>
+			<div>配置用法2：</div>
+			<div>
+				配置<span
+					style="font-size: 9pt; color: rgb(51, 51, 51); font-family: Monaco;">column=&quot;{id=id,
+					schoolId=schoolId}&quot;中的<span
+					style="font-size: 9pt; color: rgb(51, 51, 51); font-family: Monaco;">id=id。等于号前面的id是传入子节点的别名，后面的Id是当前数据的字段名。</span>
+				</span>
+			</div>
+			<div>
+				<font style="font-size: 12px;"><span
+					style="font-size: 12px; color: rgb(51, 51, 51); font-family: Monaco; line-height: 17px;">作为子集数据<span
+						style="font-size: 9pt; color: rgb(51, 51, 51); font-family: Monaco; line-height: 17px;">parameterType的类型只能是map类型</span></span></font>
+			</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;resultMap
+						type=&quot;com.wxadt.wxcep.pageModel.assessment.AssessmentItemPageModel&quot;
+						id=&quot;ItemChildResultMap&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;id
+						column=&quot;id&quot; jdbcType=&quot;INTEGER&quot;
+						property=&quot;id&quot; /&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;result
+						column=&quot;schoolId&quot; jdbcType=&quot;INTEGER&quot;
+						property=&quot;schoolId&quot; /&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    &lt;collection
+						property=&quot;nodes&quot; column=&quot;{id=id,
+						schoolId=schoolId}&quot;
+						ofType=&quot;com.wxadt.wxcep.pageModel.assessment.AssessmentItemPageModel&quot;
+						select=&quot;selectItemChild&quot;&gt;&lt;/collection&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;/resultMap&gt;</span>
+				</div>
+				<div>
+					<br />
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;select
+						id=&quot;selectSchoolProject&quot;
+						resultMap=&quot;ItemChildResultMap&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    SELECT
+						ai.*, aps.schoolId</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    FROM
+						assessment_item ai</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    INNER
+						JOIN assessment_project_school aps ON ai.projectId = aps.projectId</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    WHERE
+						ai.level = 1</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    AND
+						ai.projectId = #{projectId}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    AND
+						aps.schoolId = #{schoolId}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;/select&gt;</span>
+				</div>
+				<div>
+					<br />
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;select
+						id=&quot;selectItemChild&quot;
+						parameterType=&quot;java.util.Map&quot;
+						resultMap=&quot;ItemChildResultMap&quot;&gt;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    SELECT
+						ai.*, aps.schoolId, ais.id AS itemScoreId, ais.schoolScore,
+						ais.areaScore, ais.status</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    FROM
+						assessment_item ai</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    INNER
+						JOIN assessment_project_school aps ON ai.projectId = aps.projectId</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    LEFT
+						JOIN assessment_item_score ais ON ai.id = ais.itemId AND
+						aps.schoolId = ais.schoolId</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    WHERE
+						parentId = #{id}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    AND
+						aps.schoolId = #{schoolId}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">&lt;/select&gt;</span>
+				</div>
+			</div>
+			<div>
+				<br />
+			</div>
+			<div>
+				<br />
+			</div>
+			<div>
+				<br />
+			</div>
+			<div>
+				<br />
+			</div></span>
+	</div>
+</body>
+</html>
+ 
