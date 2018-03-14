@@ -49,6 +49,7 @@
 	// 处理ifream加载
 	function iframeLoad() {
 		var iframe = document.getElementById("frame_context");
+		iframe.height = 0;
 		var bHeight = iframe.contentWindow.document.body.scrollHeight;
 		var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
 		var height = Math.max(bHeight, dHeight);
