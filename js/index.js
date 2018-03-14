@@ -5,7 +5,7 @@ $(function(){
 	// 点击头分类处理
 	$('.jk_category').on('click', function(e){
 		e.preventDefault();// 阻止<a>标签的默认事件
-		$('.jk_category').removeClass('active');
+		$('.blog-nav-item').removeClass('active');
 		var _href = $(this).attr('href');
 		var _html = '';
 		$.getJSON("json/"+_href+".json", function(jsonData) {
