@@ -1,0 +1,188 @@
+<html>
+<head>
+<title>Evernote Export</title>
+<basefont face="微软雅黑" size="2" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="exporter-version"
+	content="Evernote Windows/305825 (zh-CN, DDL); Windows/10.0.16299 (Win64);" />
+<style>
+body, td {
+	font-family: 微软雅黑;
+	font-size: 10pt;
+}
+</style>
+</head>
+<body>
+	<a name="375" />
+
+	<div>
+		<span><div>
+				<ul>
+					<li><span style="font-weight: bold; line-height: 1.45;">include指令实现nginx多虚拟主机配置</span><br /></li>
+				</ul>
+			</div>
+			<div>个人配置的一个nginx.conf配置内容如下</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">#user  nobody;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">worker_processes  1;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">#error_log  logs/error.log;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">#error_log  logs/error.log  notice;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">#error_log  logs/error.log  info;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">#pid        logs/nginx.pid;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">events
+						{</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    worker_connections  1024;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">}</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">http
+						{</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    include       mime.types;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    default_type  application/octet-stream;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    #log_format  main  '$remote_addr
+						- $remote_user [$time_local] &quot;$request&quot; '</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    #                  '$status
+						$body_bytes_sent &quot;$http_referer&quot; '</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    #                  '&quot;$http_user_agent&quot;
+						&quot;$http_x_forwarded_for&quot;';</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    #access_log  logs/access.log  main;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    sendfile        on;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    #tcp_nopush     on;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    #keepalive_timeout  0;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    keepalive_timeout  65;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    #gzip  on;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    include
+						/usr/local/nginx/conf/vhost/*.conf;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">}</span>
+				</div>
+				<div>
+					<br
+						style="font-family: Monaco; font-size: 9pt; color: rgb(51, 51, 51);" />
+				</div>
+			</div>
+			<div>
+				在<span
+					style="font-size: 9pt; color: rgb(51, 51, 51); font-family: Monaco;">/usr/local/nginx/conf/vhost/目录下可以配置多个conf文件，内容基本配置</span>
+			</div>
+			<div
+				style="box-sizing: border-box; padding: 8px; font-size: 12px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);">
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">server
+						{</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        listen       80;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        server_name  </span><a
+						href="http://www.zhaok.top/"
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">www.zhaok.top</a>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">zhaok.top;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        location
+						/ {</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            root   /home;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">            index  test.html
+						index.htm;</span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">        }        </span>
+				</div>
+				<div>
+					<span
+						style="font-size: 9pt; background-color: rgb(251, 250, 248); color: rgb(51, 51, 51); font-family: Monaco;">    }</span>
+				</div>
+			</div>
+			<div>
+				<br />
+			</div>
+			<div>
+				<br />
+			</div>
+			<div>
+				<br />
+			</div></span>
+	</div>
+</body>
+</html>
+ 
