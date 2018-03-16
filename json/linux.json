@@ -1,0 +1,22 @@
+[{
+	"name":"linux 基础命令",
+	"url":"html/linux/linux-001.html"
+},{
+	"name":"linux Java安装",
+	"url":"html/linux/linux-002.html"
+},{
+	"name":"mysql在linux下的安装",
+	"url":"html/linux/linux-003.html"
+},{
+	"name":"mysql 主从复制",
+	"url":"html/linux/linux-004.html"
+},{
+	"name":"keepalived 安装和配置",
+	"url":"html/linux/linux-005.html"
+},{
+	"name":"nginx 安装",
+	"url":"html/linux/linux-006.html"
+},{
+	"name":"nginx 配置",
+	"url":"html/linux/linux-007.html"
+}]
