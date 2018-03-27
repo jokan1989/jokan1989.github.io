@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Session</title>
+
+<link href="../../bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet">
+<link href="../../css/blog.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="blog-post">
+		<h2 class="blog-post-title">ajax session 失效处理</h2>
+		<p class="blog-post-meta">
+			<span>2017/09/21</span> <a href="#">jokan</a>
+		</p>
+		<hr>
+		<h3>利用HttpServletResponse.sendError(401, "sessionOut") + 重写jQuery.ajax的error方法。</h3>
+		<p>spring 拦截器代码，从request.getHeader("X-Requested-With")来判断是不是ajax请求</p>
+		<pre><code>
+// 获取session
+AdminSessionInfo adminSessionInfo = ((AdminSessionInfo) request.getSession().getAttribute(Constant.ADMIN_SESSION_INFO));
+if ((adminSessionInfo == null)) {// 如果没有登录或登录超时
+    String requestType = request.getHeader("X-Requested-With");
+    boolean isAsync = !StringUtils.isEmpty(requestType);
+    if(isAsync) {
+        response.sendError(401, "sessionOut");
+    } else {
+        request.getRequestDispatcher("/error/noSession.jsp").forward(request, response);
+    }
+    return false;
+}
+		</code></pre>
+		
+		<p>重写jQuery.ajax的error方法。</p>
+		<pre><code>
+jQuery(function($){
+    // 备份jquery的ajax方法
+    var _ajax=$.ajax;
+    // 重写ajax方法，先判断登录在执行success函数
+    $.ajax=function(opt){
+        var _error = opt && opt.error || function(a, b){};
+        var _opt = $.extend(opt, {
+            error:function(e, jqXHR, errorMsg){
+                // 如果后台将请求重定向到了登录页，则data里面存放的就是登录页的源码，这里需要找到data是登录页的证据(标记)  
+                if(errorMsg == "Unauthorized" && e.responseText.indexOf('sessionOut') != -1) {
+                    alert('session 过期请重新登陆。')
+                    topWin.location.href = "/eduClient/error/noSession.jsp";
+                    return
+                }
+                _error(e, jqXHR, errorMsg);
+            },
+            // 重写$.ajax是否缓存ajax数据。
+            cache: false
+        });  
+        _ajax(_opt);  
+    };  
+});
+		</code></pre>
+		<p>实现原理：先拦截ajax请求，判断session是否存在。如果session失效就响应这个ajax.error（401），并添加错误信息。
+		这样可以确保此401错误是由于session失效导致的。最后就是重写error方法。</p>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>tomcat session 共享</title>
+
+<link href="../../bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet">
+<link href="../../css/blog.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="blog-post">
+		<h2 class="blog-post-title">Tomcat Session 共享</h2>
+		<p class="blog-post-meta">
+			<span>2017/09/12</span> <a href="#">jokan</a>
+		</p>
+		<hr>
+		<h3>利用tomcat-redis-session-manager解决tomcat的分布式session问题</h3>
+		<p>使用工具：Tomcat 7， redis 链接: https://pan.baidu.com/s/1eS5ZVpC 密码: am93</p>
+		<p>Tomcat 配置</p>
+		<p>相关jar包：tomcat-redis-session-manager-1.1.jar, commons-pool-1.6.jar, jedis-2.1.0.jar</p>
+		<p>将上面3个jar包放入taomcat/lib目录中，再tomcat的context.xml文件中加入如下内容</p>
+		<pre><code>
+&lt;Valve className="com.radiadesign.catalina.session.RedisSessionHandlerValve" />
+
+&lt;Manager className="com.radiadesign.catalina.session.RedisSessionManager"
+     host="127.0.0.1" 
+     port="6379"
+     database="0" 
+     maxInactiveInterval="60" />
+		</code></pre>
+		<p>再tomcat发布一个web工程，将配置好的tomcat复制一个，将两个tomcat端口8081、8082</p>
+		
+		<p>Web工程</p>
+		<p>再webapp下面加一个session.jsp文件，文件添加获取sessionId 信息</p>
+		<pre><code>session id=<%=session.getId()%></code></pre>
+		
+		<p>启动redis， 启动两个tomcat，并访问两个tomcat下的session.jsp</p>
+		<p>http://127.0.0.1:8081/webtest/session.jsp</p>
+		<pre><code>session id=F75EE9689902253C8EDF45CC994A4DAA</code></pre>
+		<p>http://127.0.0.1:8082/webtest/session.jsp</p>
+		<pre><code>session id=F75EE9689902253C8EDF45CC994A4DAA</code></pre>
+		
+	</div>
+</body>
+</html>
