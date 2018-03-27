@@ -7,4 +7,10 @@
 },{
 	"name":"Excel 的导入和导出",
 	"url":"html/java/java-003.html"
+},{
+	"name":"tomcat session 共享",
+	"url":"html/java/java-004.html"
+},{
+	"name":"ajax session 失效处理",
+	"url":"html/java/java-005.html"
 }]
