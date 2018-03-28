@@ -5,7 +5,7 @@ COLOR = '#000000';//球的颜色
 window.onload = function() {
     var canvas = document.getElementById('canvas');
     canvas.width = '250';//画布大小
-    canvas.height = '100';
+    canvas.height = '80';
     var context = canvas.getContext('2d');
 
     setInterval(function(){//定时器
